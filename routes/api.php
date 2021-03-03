@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::ApiResource('links', 'App\Http\Controllers\linkController');
+
+Route::ApiResource('users', 'App\Http\Controllers\userController');
