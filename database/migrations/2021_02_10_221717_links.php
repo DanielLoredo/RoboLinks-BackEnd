@@ -15,11 +15,13 @@ class Links extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string("author");
+            $table->string("url")->unique();
+            $table->string("short_url");
             $table->string("title");
-            $table->string("link")->unique();
-            $table->string("shortLink");
-            $table->boolean("public");
+            $table->boolean("private");
+            $table->string("image")->nullable();
+            $table->string("tags");
+            $table->integer("contador");
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ class Links extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('links');
     }
 }

@@ -12,11 +12,13 @@ class Link extends Model
     protected $table = "links";
 
     protected $fillable = [
-        "id",
-        "author",
+        "url",
+        "short_url",
         "title",
-        "link",
-        "shortLink",
-        "public",
+        "private",
+        "image",
+        "tags",
+        "contador",
+        "created_at"
     ];
 }
