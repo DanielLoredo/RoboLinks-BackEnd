@@ -17,8 +17,11 @@ class Link extends Model
         "title",
         "private",
         "image",
-        "tags",
         "contador",
         "created_at"
     ];
+
+    public function tags(){
+        return $this->hasOne(Tag::class); //link_id en tags
+    }
 }

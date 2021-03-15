@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use \stdClass;
 use App\Models\Link;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,11 @@ class LinkController extends Controller
     // GET
     public function index()
     {
-        return Link::all();
+        $links = Link::all();
+        foreach ($links as &$link) {
+            $link->tags;
+        }
+        return $links;
     }
 
     /**
@@ -31,9 +36,10 @@ class LinkController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Link $link)
     {
-        //
+        $link->tags;
+        return $link;
     }
 
     /**

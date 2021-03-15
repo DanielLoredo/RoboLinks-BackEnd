@@ -20,7 +20,6 @@ class Links extends Migration
             $table->string("title");
             $table->boolean("private");
             $table->string("image")->nullable();
-            $table->string("tags");
             $table->integer("contador");
             $table->timestamps();
         });
