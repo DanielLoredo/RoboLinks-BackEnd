@@ -20,4 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::ApiResource('links', 'App\Http\Controllers\LinkController');
 
+Route::ApiResource('tags', 'App\Http\Controllers\TagController');
+
 Route::ApiResource('users', 'App\Http\Controllers\userController');
