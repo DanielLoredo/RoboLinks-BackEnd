@@ -18,6 +18,7 @@ class Link extends Model
         "private",
         "image",
         "contador",
+        "tags",
         "created_at"
     ];
 

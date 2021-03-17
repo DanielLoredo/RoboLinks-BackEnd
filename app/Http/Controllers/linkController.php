@@ -19,15 +19,15 @@ class LinkController extends Controller
         return $links;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+    //POST
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        Link::create($input);
+        return response()->json([
+            'res' => true,
+            'message' => "Link agregado correctamente"
+        ], 200);
     }
 
     /**
@@ -54,14 +54,14 @@ class LinkController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+    // DELETE
     public function destroy($id)
     {
-        //
+        $link = Link::find($id);
+        $link->delete();
+        return response()->json([
+            'res' => true,
+            'message' => "Link borrado correctamente"
+        ], 200);
     }
 }
