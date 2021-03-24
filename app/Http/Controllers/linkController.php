@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use \stdClass;
 use App\Models\Link;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class LinkController extends Controller
@@ -23,7 +24,14 @@ class LinkController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        Link::create($input);
+        $tags = $input["tags"];
+        unset($input["tags"]);
+
+        $link = Link::create($input);
+        
+        $tags["link_id"] = $link->id;
+        Tag::create($tags);
+
         return response()->json([
             'res' => true,
             'message' => "Link agregado correctamente"
