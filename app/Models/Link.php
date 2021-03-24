@@ -22,7 +22,8 @@ class Link extends Model
         "created_at"
     ];
 
-    public function tags(){
+    public function tags()
+    {
         return $this->hasOne(Tag::class); //link_id en tags
     }
 }

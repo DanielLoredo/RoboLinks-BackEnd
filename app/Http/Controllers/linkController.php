@@ -12,10 +12,12 @@ class LinkController extends Controller
     // GET
     public function index()
     {
-        $links = Link::all();
+        $links = Link::orderByDesc('contador')->get();
+
         foreach ($links as &$link) {
             $link->tags;
         }
+
         return $links;
     }
 
@@ -30,28 +32,22 @@ class LinkController extends Controller
         ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+    // GET WITH ID
     public function show(Link $link)
     {
         $link->tags;
         return $link;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
+    // PATCH
     public function update(Request $request, $id)
     {
-        //
+        $link = Link::find($id);
+        $link->update($request->all());
+        return response()->json([
+            'res' => true,
+            'message' => "Link actualizado correctamente"
+        ], 200);
     }
 
     // DELETE
