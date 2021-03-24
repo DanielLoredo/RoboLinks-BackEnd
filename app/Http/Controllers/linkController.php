@@ -10,9 +10,9 @@ class LinkController extends Controller
 {
 
     // GET
-    public function index()
+    public function index(Request $request)
     {
-        $links = Link::orderByDesc('contador')->get();
+        $links = Link::filter()->orderByDesc('contador')->get();
 
         foreach ($links as &$link) {
             $link->tags;
@@ -32,7 +32,6 @@ class LinkController extends Controller
         ], 200);
     }
 
-    // GET WITH ID
     public function show(Link $link)
     {
         $link->tags;
