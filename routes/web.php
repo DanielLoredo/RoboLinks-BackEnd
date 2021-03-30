@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LinkController;
+use Illuminate\Http\Redirect;
+use App\Models\Link;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('{shortUrl}', function ($shortUrl){ 
+    $realShortUrl = "https://robo.io/".$shortUrl;
+    $link = DB::table('links')->where('short_url',$realShortUrl)->get("url");
+    
+    DB::table('links')->increment('contador', 1, ['short_url' => $realShortUr]);
+
+    $decoded_traces=json_decode($link, true);
+    $real = $decoded_traces[0]["url"];
+    return redirect()->away("{$real}");
 });
