@@ -21,11 +21,12 @@ Route::get('/', function () {
 });
 
 Route::get('{shortUrl}', function ($shortUrl){ 
-    $realShortUrl = "https://robo.io/".$shortUrl;
-    $link = DB::table('links')->where('short_url',$realShortUrl)->get("url");
-    
-    DB::table('links')->increment('contador', 1, ['short_url' => $realShortUr]);
 
+    //CHANGE             ↓↓↓↓↓↓↓          when deployed
+    $realShortUrl = "https://robo.io/".$shortUrl;
+    
+    DB::table('links')->where('short_url',$realShortUrl)->increment('contador');
+    $link = DB::table('links')->where('short_url',$realShortUrl)->get("url");
     $decoded_traces=json_decode($link, true);
     $real = $decoded_traces[0]["url"];
     return redirect()->away("{$real}");

@@ -14,12 +14,15 @@ class LinkController extends Controller
     public function index(Request $request)
     {
         $links = Link::filter()->orderByDesc('contador')->get();
-
+        //$links = Link::orderByDesc('contador')->get();
+        //$filtered = $links->whereIn('private', $request,);
         foreach ($links as &$link) {
             $link->tags;
         }
-
-        return $links;
+        return response()->json([
+            "res" => true,
+            "data" => $links
+        ], status:200);
     }
 
     //POST
@@ -37,34 +40,45 @@ class LinkController extends Controller
         return response()->json([
             'res' => true,
             'message' => "Link agregado correctamente"
-        ], 200);
+        ], 201);
     }
 
     public function show(Link $link)
     {
         $link->tags;
-        return $link;
+        return response()->json([
+            'res' => true,
+            'data' => $link
+        ], 200);
     }
 
     // PATCH
     public function update(Request $request, $id)
     {
         $link = Link::find($id);
+        $tags = Tag::firstWhere('link_id', $id);
+
+        $input = $request->all();
+        $tagsToUpdate = $input["tags"];
+
+        $tags->update($tagsToUpdate);
         $link->update($request->all());
         return response()->json([
             'res' => true,
             'message' => "Link actualizado correctamente"
-        ], 200);
+        ], 201);
     }
 
     // DELETE
     public function destroy($id)
     {
         $link = Link::find($id);
+        $tags = Tag::firstWhere('link_id', $id);
         $link->delete();
+        $tags->delete();
         return response()->json([
             'res' => true,
             'message' => "Link borrado correctamente"
-        ], 200);
+        ], 204);
     }
 }
