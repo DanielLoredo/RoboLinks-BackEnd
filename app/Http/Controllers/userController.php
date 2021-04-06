@@ -11,12 +11,14 @@ class userController extends Controller
     public function index(Request $request)
     {
         $users = User::all();
-        return $users;
+        return response()->json([
+            "res" => true,
+            "data" => $users
+        ], status:200);
     }
 
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required',
             'type' => ['required','in:user,admin'],
@@ -26,14 +28,23 @@ class userController extends Controller
             return response()->json([
                 "res" => false,
                 "message" => "User cannot be created, check the email or type (user,admin)"
-            ], status:200);
+            ], status:500);
         }
 
         User::create($request->all());
         return response()->json([
             "res" => true,
             "message" => "User created succesfully"
-        ], status:200);
+        ], status:201);
 
+    }
+
+    public function destroy($id){
+        $user = User::find($id);
+        $user->delete();
+        return response()->json([
+            'res' => true,
+            'message' => "Usuario borrado correctamente"
+        ], 204);
     }
 }

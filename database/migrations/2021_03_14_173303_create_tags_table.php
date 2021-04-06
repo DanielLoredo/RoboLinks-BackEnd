@@ -16,19 +16,19 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("link_id");
-            $table->boolean("GitHub");
-            $table->boolean("Social");
-            $table->boolean("@Home");
-            $table->boolean("VSSS");
-            $table->boolean("Sponsors");
-            $table->boolean("Documentation");
-            $table->boolean("Facebook");
-            $table->boolean("YouTube");
-            $table->boolean("ML");
-            $table->boolean("AI");
-            $table->boolean("Robotics");
-            $table->boolean("Mechanics");
-            $table->boolean("Candidates");
+            $table->boolean("GitHub")->default('0');
+            $table->boolean("Social")->default('0');
+            $table->boolean("@Home")->default('0');
+            $table->boolean("VSSS")->default('0');
+            $table->boolean("Sponsors")->default('0');
+            $table->boolean("Documentation")->default('0');
+            $table->boolean("Facebook")->default('0');
+            $table->boolean("YouTube")->default('0');
+            $table->boolean("ML")->default('0');
+            $table->boolean("AI")->default('0');
+            $table->boolean("Robotics")->default('0');
+            $table->boolean("Mechanics")->default('0');
+            $table->boolean("Candidates")->default('0');
             $table->timestamps();
         });
     }
