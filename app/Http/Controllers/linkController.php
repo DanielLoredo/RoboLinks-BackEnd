@@ -13,16 +13,27 @@ class LinkController extends Controller
     // GET
     public function index(Request $request)
     {
-        $links = Link::filter()->orderByDesc('contador')->get();
-        //$links = Link::orderByDesc('contador')->get();
-        //$filtered = $links->whereIn('private', $request,);
-        foreach ($links as &$link) {
-            $link->tags;
+        if (isset($request->tags)) {
+            $link_tag_array = Tag::filter()->get();
+            $link_ids = $link_tag_array->pluck('link_id');
+            $links = Link::whereIn('id', $link_ids)->filter()->get();
+
+            foreach ($links as &$link) {
+                $link->tags;
+            }
+        } else {
+            $links = Link::filter()->orderByDesc('contador')->get();
+            //$links = Link::orderByDesc('contador')->get();
+            //$filtered = $links->whereIn('private', $request,);
+            foreach ($links as &$link) {
+                $link->tags;
+            }
         }
+
         return response()->json([
             "res" => true,
             "data" => $links
-        ], status:200);
+        ], 200);
     }
 
     //POST
@@ -33,7 +44,7 @@ class LinkController extends Controller
         unset($input["tags"]);
 
         $link = Link::create($input);
-        
+
         $tags["link_id"] = $link->id;
         Tag::create($tags);
 

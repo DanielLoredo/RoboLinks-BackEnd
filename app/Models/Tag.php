@@ -28,4 +28,12 @@ class Tag extends Model
         "Candidates",
         "created_at"
     ];
+
+    public function scopeFilter($query)
+    {
+        foreach (explode(",", request('tags')) as $tag) {
+            $query->where($tag, 1);
+        }
+        return $query;
+    }
 }
