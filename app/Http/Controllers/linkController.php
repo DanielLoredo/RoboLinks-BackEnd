@@ -59,9 +59,19 @@ class LinkController extends Controller
         $tags = Tag::firstWhere('link_id', $id);
 
         $input = $request->all();
-        $tagsToUpdate = $input["tags"];
 
-        $tags->update($tagsToUpdate);
+        if(array_key_exists("tags", $input)){
+            $tagsToUpdate = $input["tags"];
+        
+            $tags->update(["@home"=>false,"candidates"=>false,"contests"=>false,
+            "covid"=>false,"docs"=>false,"drones"=>false,"electronics"=>false,
+            "github"=>false,"larcOpen"=>false,"mechanics"=>false,"presentation"=>false,
+            "programming"=>false,"robocup"=>false,"sideProjects"=>false,"social"=>false,
+            "sponsors"=>false,"vsss"=>false,"youtube"=>false,"workshop"=>false]);
+
+            $tags->update($tagsToUpdate);
+        }
+         
         $link->update($request->all());
         return response()->json([
             'res' => true,

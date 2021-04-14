@@ -17,6 +17,23 @@ class userController extends Controller
         ], status:200);
     }
 
+    public function show($email){
+        
+        $user = User::firstWhere('email', $email);
+        
+        if (!$user) {
+            return response()->json([
+                "res" => false,
+                "message" => "Ingresa un email que exista"
+            ], status:500);
+        }
+
+        return response()->json([
+            'res' => true,
+            'data' => $user
+        ], 200);
+    }
+    
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
