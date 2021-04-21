@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::get('{shortUrl}', function ($shortUrl){ 
 
     //CHANGE             ↓↓↓↓↓↓↓          when deployed
-    $realShortUrl = "https://robo.io/".$shortUrl;
+    $realShortUrl = "http://rbgs.xyz/".$shortUrl;
     
     DB::table('links')->where('short_url',$realShortUrl)->increment('contador');
     $link = DB::table('links')->where('short_url',$realShortUrl)->get("url");

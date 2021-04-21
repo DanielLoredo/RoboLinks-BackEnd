@@ -16,7 +16,7 @@ class LinkController extends Controller
         if (isset($request->tags)) {
             $link_tag_array = Tag::filter()->get();
             $link_ids = $link_tag_array->pluck('link_id');
-            $links = Link::whereIn('id', $link_ids)->filter()->get();
+            $links = Link::whereIn('id', $link_ids)->filter()->orderByDesc('contador')->get();
 
             foreach ($links as &$link) {
                 $link->tags;

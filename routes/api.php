@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::ApiResource('links', 'App\Http\Controllers\LinkController');
+Route::ApiResource('links', 'App\Http\Controllers\linkController');
 
 Route::ApiResource('tags', 'App\Http\Controllers\TagController');
 

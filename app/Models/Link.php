@@ -30,19 +30,19 @@ class Link extends Model
     public function scopeFilter($query)
     {
         if (request('title')) {
-            $query->where('title', request('title'));
+            $query->where('title', 'like', '%'.request('title').'%');
         }
 
-        if (request('private')) {
+        if (isset($_GET["private"])) {
             $query->where('private', request('private'));
         }
 
         if (request('short_url')) {
-            $query->where('short_url', request('short_url'));
+            $query->where('short_url', 'like', '%'.request('short_url').'%');
         }
 
         if (request('url')) {
-            $query->where('url', request('url'));
+            $query->where('url', 'like', '%'.request('url').'%');
         }
 
         return $query;
