@@ -9,9 +9,9 @@ class Tag extends Model
 {
     use HasFactory;
 
-    protected $table = "tags";
+    public $table = "tags";
 
-    protected $fillable = [
+    public $fillable = [
         "link_id",
         "@home",
         "candidates",
@@ -38,6 +38,7 @@ class Tag extends Model
     public function scopeFilter($query)
     {
         foreach (explode(",", request('tags')) as $tag) {
+            print_r($tag);
             $query->where($tag, 1);
         }
         return $query;

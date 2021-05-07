@@ -19,16 +19,40 @@ class LinkController extends Controller
             $links = Link::whereIn('id', $link_ids)->filter()->orderByDesc('contador')->get();
 
             foreach ($links as &$link) {
+                $arr = [];
                 $link->tags;
+                $key = array_keys(array_slice($link["tags"]->getOriginal(),0,21),1);
+                if(!empty($key)){
+                    if($key[0] == "id"){
+                        array_splice($key, 0,1);
+                    }
+                    if($key[0] == "link_id"){
+                        array_splice($key, 0,1);
+                    }
+                }
+                unset($link["tags"]);
+                $link->tags = $key;
+                
             }
         } else {
             $links = Link::filter()->orderByDesc('contador')->get();
-            //$links = Link::orderByDesc('contador')->get();
-            //$filtered = $links->whereIn('private', $request,);
             foreach ($links as &$link) {
+                $arr = [];
                 $link->tags;
-            }
+                $key = array_keys(array_slice($link["tags"]->getOriginal(),0,21),1);
+                if(!empty($key)){
+                    if($key[0] == "id"){
+                        array_splice($key, 0,1);
+                    }
+                    if($key[0] == "link_id"){
+                        array_splice($key, 0,1);
+                    }
+                }
+                unset($link["tags"]);
+                $link->tags = $key;
+             } 
         }
+
 
         return response()->json([
             "res" => true,
@@ -45,8 +69,14 @@ class LinkController extends Controller
 
         $link = Link::create($input);
 
-        $tags["link_id"] = $link->id;
-        Tag::create($tags);
+        $keys = [];
+
+        foreach($tags as $tag){
+            $keys = (object) array_merge( (array)$keys, array( $tag =>1 ) );
+        }
+        $keys->link_id = $link->id;
+        $array = get_object_vars($keys);
+        Tag::create($array);
 
         return response()->json([
             'res' => true,
@@ -56,7 +86,20 @@ class LinkController extends Controller
 
     public function show(Link $link)
     {
+        $arr = [];
         $link->tags;
+        $key = array_keys(array_slice($link["tags"]->getOriginal(),0,21),1);
+        if(!empty($key)){
+            if($key[0] == "id"){
+                array_splice($key, 0,1);
+            }
+            if($key[0] == "link_id"){
+                array_splice($key, 0,1);
+            }
+        }
+        unset($link["tags"]);
+        $link->tags = $key;
+        
         return response()->json([
             'res' => true,
             'data' => $link
@@ -72,17 +115,21 @@ class LinkController extends Controller
         $input = $request->all();
 
         if(array_key_exists("tags", $input)){
-            $tagsToUpdate = $input["tags"];
-        
             $tags->update(["@home"=>false,"candidates"=>false,"contests"=>false,
             "covid"=>false,"docs"=>false,"drones"=>false,"electronics"=>false,
             "github"=>false,"larcOpen"=>false,"mechanics"=>false,"presentation"=>false,
             "programming"=>false,"robocup"=>false,"sideProjects"=>false,"social"=>false,
             "sponsors"=>false,"vsss"=>false,"youtube"=>false,"workshop"=>false]);
 
-            $tags->update($tagsToUpdate);
+            $tag2update = $input["tags"];    
+            $keys = [];
+            foreach($tag2update  as $tag){
+                $keys = (object) array_merge( (array)$keys, array( $tag =>1 ) );
+            }
+            $array = get_object_vars($keys);
+            $tags->update($array);
         }
-         
+        
         $link->update($request->all());
         return response()->json([
             'res' => true,
